@@ -1,17 +1,17 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 class TicTacInterface
   def initialize()
     begin
       puts `clear`
-      puts "What's your name, player 1?"
+      p "What's your name, player 1?"
       @player1 = gets.chomp
       puts `clear`
-      puts "What's your name, player 2?"
+      p "What's your name, player 2?"
       @player2 = gets.chomp
       puts `clear`
     rescue StandardError => e
-      puts "No name given"
-      retry  
+      p "No name given"
+      retry
     else
     end
     @play = false
@@ -24,11 +24,11 @@ class TicTacInterface
     moves = 0
     paint
     while @play
-      puts "#{ @playert ? @player1 : @player2 }, make a move"
+      p "#{ @playert ? @player1 : @player2 }, make a move"
       begin
         move((gets.chomp.to_i) - 1)
       rescue StandardError => e
-        puts "Error!!"
+        p "Error!!"
         retry
       end
       @playert = !@playert
@@ -39,25 +39,25 @@ class TicTacInterface
   end
 
   private
-  
+
   def move(num)
     @board[num] = @playert ? "X" : "O"
-    paint()    
-  end 
+    paint()
+  end
 
   def paint()
     puts `clear`
-    puts "||||||||||||||||||||||"
+    p "||||||||||||||||||||||"
     3.times do |x|
-      puts "        #{@board[(3*x)]} #{@board[(3*x)+1]} #{@board[(3*x)+2]}"
+      p "        #{@board[(3*x)]} #{@board[(3*x)+1]} #{@board[(3*x)+2]}"
     end
-    puts "||||||||||||||||||||||"
+    p "||||||||||||||||||||||"
   end
 
   def game_end
     puts `clear`
     paint
-    puts "Thanks for playing!!"    
+    p "Thanks for playing!!"
   end
 
 end
