@@ -5,32 +5,34 @@ require './lib/logic.rb'
 
 class TicTacInterface
   def initialize
-    @engine = TicTacLogic.new
+    players = [0, 0]
     begin
       puts `clear`
       p "What's your name, player 1?"
-      @engine.player1 = gets.chomp
+      players[0] = gets.chomp
       puts `clear`
       p "What's your name, player 2?"
-      @engine.player2 = gets.chomp
+      players[1] = gets.chomp
       puts `clear`
     rescue StandardError => e
       p "No name given #{e}"
       sleep 1
       retry
     end
+    @engine = TicTacLogic.new(players[0], players[1])
   end
 
   def game
     paint
-    p "Please #{@engine.playert ? @engine.player1 : @engine.player2}, make a move"
     while @engine.play
+      p "Please #{@engine.current_player}, make a move"
       until @engine.move(gets.chomp.to_i)
-        p "Please, #{@engine.playert ? @engine.player1 : @engine.player2}, type the number of an avaiable spot."
+        p "Please, #{@engine.current_player}, type the number of an avaiable spot."
       end
       paint
-      p @engine.game_end?
+      @win = @engine.game_end?
     end
+    ending(@win)
   end
 
   private
@@ -42,6 +44,11 @@ class TicTacInterface
       p "        #{@engine.board[(3 * x)]} #{@engine.board[(3 * x) + 1]} #{@engine.board[(3 * x) + 2]}"
     end
     p '||||||||||||||||||||||'
+  end
+
+  def ending(win)
+    return p "It's a tie!" unless win
+    p "Winner is #{@engine.current_player}!"
   end
 end
 

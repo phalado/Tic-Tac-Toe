@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 class TicTacLogic
-  attr_accessor :player1, :player2
-  attr_reader :board, :play, :playert
+  attr_reader :board, :play, :playert, :player1, :player2
 
-  def initialize
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
     @play = true
     @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     @playert = true
   end
 
   def move(num)
-    if @board[num - 1].is_a?(Integer) && num >= 0 && num <= 9
-      @board[num - 1] = @playert ? 'X' : 'O'
+    if num.positive? && num <= 9 && @board[num - 1].is_a?(Integer)
+      @board[num - 1] = @playert ? :X : :O
       return true
     end
     false
@@ -21,13 +22,13 @@ class TicTacLogic
   def game_end?
     if victory || vic_diagonal
       @play = false
-      "Game over - Winner: #{@playert ? @player1 : @player2}"
+      true
     elsif @board.none?(Integer)
       @play = false
-      "Game over - it's a tie"
+      false
     else
       @playert = !@playert
-      "Please #{@playert ? @player1 : @player2}, make a move"
+      -1
     end
   end
 
@@ -52,5 +53,9 @@ class TicTacLogic
     else
       false
     end
+  end
+
+  def current_player
+    @playert ? @player1 : @player2
   end
 end
