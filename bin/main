@@ -1,65 +1,55 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require './lib/logic.rb'
+
 class TicTacInterface
-  def initialize()
+  def initialize
+    players = [0, 0]
     begin
       puts `clear`
       p "What's your name, player 1?"
-      @player1 = gets.chomp
+      players[0] = gets.chomp
       puts `clear`
       p "What's your name, player 2?"
-      @player2 = gets.chomp
+      players[1] = gets.chomp
       puts `clear`
     rescue StandardError => e
-      p "No name given"
+      p "No name given #{e}"
+      sleep 1
       retry
-    else
     end
-    @play = false
-    @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    @playert = true
-    @play = true
+    @engine = TicTacLogic.new(players[0], players[1])
   end
 
   def game
-    moves = 0
     paint
-    while @play
-      p "#{ @playert ? @player1 : @player2 }, make a move"
-      begin
-        move((gets.chomp.to_i) - 1)
-      rescue StandardError => e
-        p "Error!!"
-        retry
+    while @engine.play
+      p "Please #{@engine.current_player}, make a move"
+      until @engine.move(gets.chomp.to_i)
+        p "Please, #{@engine.current_player}, type the number of an avaiable spot."
       end
-      @playert = !@playert
-      moves += 1
-      @play = moves < 9
-      game_end unless @play
+      paint
+      @win = @engine.game_end?
     end
+    ending(@win)
   end
 
   private
 
-  def move(num)
-    @board[num] = @playert ? "X" : "O"
-    paint()
-  end
-
-  def paint()
+  def paint
     puts `clear`
-    p "||||||||||||||||||||||"
+    p '||||||||||||||||||||||'
     3.times do |x|
-      p "        #{@board[(3*x)]} #{@board[(3*x)+1]} #{@board[(3*x)+2]}"
+      p "        #{@engine.board[(3 * x)]} #{@engine.board[(3 * x) + 1]} #{@engine.board[(3 * x) + 2]}"
     end
-    p "||||||||||||||||||||||"
+    p '||||||||||||||||||||||'
   end
 
-  def game_end
-    puts `clear`
-    paint
-    p "Thanks for playing!!"
+  def ending(win)
+    return p "It's a tie!" unless win
+    p "Winner is #{@engine.current_player}!"
   end
-
 end
 
 main = TicTacInterface.new
