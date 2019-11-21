@@ -1,36 +1,30 @@
 #!/usr/bin/env ruby
+require '../lib/logic.rb'
+
 class TicTacInterface
   def initialize()
+    @engine = TicTacLogic.new
     begin
       puts `clear`
       p "What's your name, player 1?"
-      @player1 = gets.chomp
+      @engine.player1 = gets.chomp
       puts `clear`
       p "What's your name, player 2?"
-      @player2 = gets.chomp
+      @engine.player2 = gets.chomp
       puts `clear`
     rescue StandardError => e
       p "No name given"
       retry
-    else
     end
-    @play = false
-    @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    @playert = true
-    @play = true
   end
 
   def game
-    moves = 0
     paint
-    while @play
-      p "#{ @playert ? @player1 : @player2 }, make a move"
+    while @engine.play
+      p "#{ @engine.playert ? @engine.player1 : @engine.player2 }, make a move"
       begin
-        move((gets.chomp.to_i) - 1)
-      rescue StandardError => e
-        p "Error!!"
-        retry
-      end
+        move(gets.chomp)
+
       @playert = !@playert
       moves += 1
       @play = moves < 9
@@ -39,11 +33,6 @@ class TicTacInterface
   end
 
   private
-
-  def move(num)
-    @board[num] = @playert ? "X" : "O"
-    paint()
-  end
 
   def paint()
     puts `clear`
