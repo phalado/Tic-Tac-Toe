@@ -3,9 +3,9 @@
 
 This repository contains a command prompt implementation of the classic Tic-Tac-Toe game, built with the Ruby language.
 
-Inside the bin/main file, you'll find the TicTacInterface class, which handles user interactions; inside lib/logic.rb, you'll find TicTacLogic, a class which implements all logic of the game.
+Inside the bin/main file, you'll find the Tic Tac Toe Interface class, which handles user interactions; inside lib/logic.rb, you'll find Tic Tac Toe Logic, a class which implements all logic of the game.
 
-  
+
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ git clone https://github.com/phalado/Tic-Tac-Toe
 
 ```
 
-Then, goo to the project directory by typing:
+Then, go to the project directory by typing:
 
 ```bash
 
@@ -25,7 +25,7 @@ cd Tic-Tac-Toe
 
 ```
 
-By typing:
+To run the game type:
 
 ```bash
 
@@ -35,7 +35,7 @@ bin/main
 
 On your command prompt, you'll initialize the game.
 
-  
+
 
 ## Instructions
 
