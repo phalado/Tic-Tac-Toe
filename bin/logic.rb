@@ -1,5 +1,5 @@
 class TicTacLogic
-  atrr_acessor :player1, :player2
+  attr_accessor :player1, :player2
   attr_reader :board, :play, :playert
 
   def initialize()
