@@ -58,4 +58,11 @@ class TicTacLogic
   def current_player
     @playert ? @player1 : @player2
   end
+
+  def play_again
+    @playert = true
+    @play = true
+    @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  end
+
 end

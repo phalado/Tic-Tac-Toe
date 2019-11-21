@@ -47,8 +47,21 @@ class TicTacInterface
   end
 
   def ending(win)
-    return p "It's a tie!" unless win
-    p "Winner is #{@engine.current_player}!"
+    p "It's a tie!" unless win
+    p "Winner is #{@engine.current_player}!" if win
+    begin
+      p 'Play Again? (y/n)'
+      play_again = gets.chomp
+    rescue => exception
+      p 'Fatal Error!!'
+    end
+    if play_again.to_sym == :y
+      @engine.play_again
+      return game
+    elsif play_again.to_sym == :n
+      return p "Goodbye!"      
+    end
+    p "Not a valid option. Goodbye!"
   end
 end
 
