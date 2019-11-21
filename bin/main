@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require './lib/logic.rb'
 
 class TicTacInterface
-  def initialize()
+  def initialize
     @engine = TicTacLogic.new
     begin
       puts `clear`
@@ -12,18 +14,20 @@ class TicTacInterface
       p "What's your name, player 2?"
       @engine.player2 = gets.chomp
       puts `clear`
-    # rescue StandardError => e
-    #   p "No name given"
-    #   sleep 1
-    #   retry
+    rescue StandardError => e
+      p "No name given #{e}"
+      sleep 1
+      retry
     end
   end
 
   def game
     paint
+    p "Please #{@engine.playert ? @engine.player1 : @engine.player2}, make a move"
     while @engine.play
-      p "#{ @engine.playert ? @engine.player1 : @engine.player2 }, make a move"
-      @engine.move(gets.chomp.to_i)
+      until @engine.move(gets.chomp.to_i)
+        p "Please, #{@engine.playert ? @engine.player1 : @engine.player2}, type the number of an avaiable spot."
+      end
       paint
       p @engine.game_end?
     end
@@ -31,13 +35,13 @@ class TicTacInterface
 
   private
 
-  def paint()
+  def paint
     puts `clear`
-    p "||||||||||||||||||||||"
+    p '||||||||||||||||||||||'
     3.times do |x|
-      p "        #{@board[(3*x)]} #{@board[(3*x)+1]} #{@board[(3*x)+2]}"
+      p "        #{@engine.board[(3 * x)]} #{@engine.board[(3 * x) + 1]} #{@engine.board[(3 * x) + 2]}"
     end
-    p "||||||||||||||||||||||"
+    p '||||||||||||||||||||||'
   end
 end
 
